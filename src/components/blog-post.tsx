@@ -6,6 +6,7 @@ import { Button } from "./form/button";
 import editIcon from "@/assets/images/edit.svg";
 import deleteIcon from "@/assets/images/delete.svg";
 import { deletePost } from "@/api";
+import Can from "./can";
 
 interface BlogPostProps {
   post: BlogPostType;
@@ -48,25 +49,29 @@ export function BlogPost({ post }: BlogPostProps) {
         <div className="blog-card__category">Technology</div>
         <h3 className="blog-card__heading">{post.title}</h3>
         <div className="blog-card__actions">
-          <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(`/blog/${post.id}`);
-            }}
-            colorScheme="grey"
-          >
-            <img src={editIcon} alt="edit" width="12px" />
-          </Button>
-          <Button
-            colorScheme="grey"
-            isDisabled={deleteLoading}
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete();
-            }}
-          >
-            <img src={deleteIcon} alt="delete" width="12px" />
-          </Button>
+          <Can i="blog.write">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/blog/${post.id}`);
+              }}
+              colorScheme="grey"
+            >
+              <img src={editIcon} alt="edit" width="12px" />
+            </Button>
+          </Can>
+          <Can i="blog.delete">
+            <Button
+              colorScheme="grey"
+              isDisabled={deleteLoading}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+            >
+              <img src={deleteIcon} alt="delete" width="12px" />
+            </Button>
+          </Can>
         </div>
         <p className="blog-card__date">May 29, 2024</p>
       </div>
